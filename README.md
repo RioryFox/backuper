@@ -44,6 +44,8 @@ cd /etc
 git remote add gitea http://localhost:3001/RioryFox/nixos_server.git
 git remote add origin https://github.com/RioryFox/nixos_server.git
 
+---
+
 ## Восстановление из бэкапа 
 
 ### Из папки
