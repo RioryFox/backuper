@@ -113,10 +113,11 @@ cd /etc
 git add .
 if ! git diff --cached --quiet; then
  	git commit -m "Auto backup from $(hostname) on $(date '+%Y-%m-%d %H:%M:%S')"
+	set +e
     	git_push_force origintea
    	git_push_force origingit
 	git_push_force origincode
-	
+	set -e
 else
  	echo "No changes in /etc"
 fi
