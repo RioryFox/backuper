@@ -111,20 +111,15 @@ cd /etc
 git add .
 if ! git diff --cached --quiet; then
  	git commit -m "Auto backup from $(hostname) on $(date '+%Y-%m-%d %H:%M:%S')"
-    	git_push_force gitea
-    	echo "Git backup pushed to Gitea"
-	if git remote get-url origin >/dev/null 2>&1; then
-       		git_push_force origin
-        	echo "Git backup pushed to GitHub"
-    	else
-        	echo "Remote 'origin' not configured, skipping GitHub"
-    	fi
+    	git_push_force origintea #gittea
+   	git_push_force origingit
+	#git_push_force origincode
+	#git_push_force 
 else
  	echo "No changes in /etc"
 fi
 
 cd - > /dev/null
-sleep 1
 echo "			UPDATING CHANNELS..."
 sudo nix-channel --update > /dev/null 
 echo "			REBUILDING NIXOS..."
@@ -137,3 +132,4 @@ clear
 fastfetch 
 ipfetch
 #oneko
+	
