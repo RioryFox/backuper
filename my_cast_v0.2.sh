@@ -19,7 +19,7 @@ while getopts ":flu" opt; do
 			open_file=false
 		;;
     		l)
-			set +e
+			set -e
 			git add .
 			if git diff --cached --quiet; then
     				echo "No changes to commit, skipping Git push"
@@ -44,7 +44,7 @@ while getopts ":flu" opt; do
 					;;
 				esac
 			done
-			set e-
+			set +e
 		;;
 		u)
 			echo "Self-update initiated..."
