@@ -79,7 +79,6 @@ done
 
 if [ "$open_file" = true ]; then
   echo "                  OPEN FILE..."
-  sleep 0.35
   sudo nano /etc/nixos/configuration.nix
 else
   echo "Skipping file opening because of the -f flag."
