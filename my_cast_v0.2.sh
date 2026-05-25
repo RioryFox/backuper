@@ -12,8 +12,13 @@ while getopts ":flu" opt; do
 		;;
     		l)
 			git add .
-			git commit -m "Load from $(hostname) on $(date '+%Y-%m-%d %H:%M:%S')"
-			git push originer main --force
+			if git diff --cached --quiet; then
+    				echo "No changes to commit, skipping Git push"
+			else
+				git commit -m "Load from $(hostname) on $(date '+%Y-%m-%d %H:%M:%S')"
+				git push origin main
+			fi
+			
 			while true; do
 				read -p "Script loaded to git suc, contionue?(Y/N)" CHOISE
 				CHOISE=$(echo "$CHOISE" | tr '[:lower:]' '[:upper:]')
