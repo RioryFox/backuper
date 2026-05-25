@@ -5,6 +5,14 @@ clear
 open_file=true
 SCRIPT_DIR="$(pwd)"
 
+git_push_force() {
+    if result=$(git push "$1" main --force 2>&1); then
+        echo "✓ $1 push successful"
+    else
+        echo "✗ $1 push failed: $result"
+    fi
+} 
+
 while getopts ":flu" opt; do
 	case ${opt} in
     		f)
@@ -17,9 +25,9 @@ while getopts ":flu" opt; do
     				echo "No changes to commit, skipping Git push"
 			else
 				git commit -m "Load from $(hostname) on $(date '+%Y-%m-%d %H:%M:%S')"
-				git push origingit main --force
-				git push origintea main --force
-				git push origincode main --force
+				git_push_force origingit 
+				git_push_force origintea
+				git_push_force origincode
 			fi
 			while true; do
 				read -p "Script loaded to git suc, contionue?(Y/N)" CHOISE
