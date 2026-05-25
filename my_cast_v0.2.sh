@@ -21,7 +21,6 @@ while getopts ":flu" opt; do
 				git push origintea main --force
 				git push origincode main --force
 			fi
-			
 			while true; do
 				read -p "Script loaded to git suc, contionue?(Y/N)" CHOISE
 				CHOISE=$(echo "$CHOISE" | tr '[:lower:]' '[:upper:]')
