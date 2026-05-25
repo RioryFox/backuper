@@ -14,6 +14,21 @@ while getopts ":flu" opt; do
 			git add .
 			git commit -m "Load from $(hostname) on $(date '+%Y-%m-%d %H:%M:%S')"
 			git push originer main --force
+			while true; do
+				read -p "Script loaded to git suc, contionue?(Y/N)" CHOISE
+				CHOISE=$(echo "$CHOISE" | tr '[:lower:]' '[:upper:]')
+				case ${CHOISE} in
+					Y|YES|YEA|YEAH|OFCORSE) 
+						break
+					;;
+					N|NO|NOPE|NEVER) 
+						exit 1
+					;;
+					*)
+						echo "Invalid answear..." 
+					;;
+				esac
+			done
 		;;
 		u)
 			echo "🔄 Self-update initiated..."
