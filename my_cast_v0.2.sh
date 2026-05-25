@@ -17,7 +17,7 @@ while getopts ":flu" opt; do
     				echo "No changes to commit, skipping Git push"
 			else
 				git commit -m "Load from $(hostname) on $(date '+%Y-%m-%d %H:%M:%S')"
-				git push origin main
+				git push originer main
 			fi
 			
 			while true; do
