@@ -38,7 +38,7 @@ while getopts ":flu" opt; do
 			set e-
 		;;
 		u)
-			echo "🔄 Self-update initiated..."
+			echo "Self-update initiated..."
 			SCRIPT_PATH="$(realpath "$0")"
 			TMP_DIR=$(mktemp -d)
 		    	git clone --depth 1 https://github.com/RioryFox/backuper.git "$TMP_DIR"
