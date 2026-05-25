@@ -132,4 +132,3 @@ clear
 fastfetch 
 ipfetch
 #oneko
-	
