@@ -111,10 +111,10 @@ cd /etc
 git add .
 if ! git diff --cached --quiet; then
  	git commit -m "Auto backup from $(hostname) on $(date '+%Y-%m-%d %H:%M:%S')"
-    	git push gitea main --force 2>&1 | grep -v "seahorse-Message"
+    	git_push_force gitea
     	echo "Git backup pushed to Gitea"
 	if git remote get-url origin >/dev/null 2>&1; then
-       		git push origin main --force 2>&1 | grep -v "seahorse-Message"
+       		git_push_force origin
         	echo "Git backup pushed to GitHub"
     	else
         	echo "Remote 'origin' not configured, skipping GitHub"
