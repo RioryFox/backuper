@@ -50,11 +50,11 @@ while getopts ":flu" opt; do
 					cp "$NEW_SCRIPT" "$SCRIPT_PATH"
 					chmod +x "$SCRIPT_PATH"
 					rm -rf "$TMP_DIR"
-					echo "✅ Update complete. Script is now up to date."
-			        ) & echo "⚠️ Update applied. Please re-run the script manually."
+					echo "Update complete. Script is now up to date."
+			        ) & echo "Update applied. Please re-run the script manually."
 				exit 0
 			else
-		        	echo "❌ No script found in repository"
+		        	echo "No script found in repository"
 		        	rm -rf "$TMP_DIR"
 		        	exit 1
 		    	fi
