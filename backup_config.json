@@ -1,0 +1,25 @@
+{
+  "repositories": {
+    "nixos_server": {
+      "remotes": {
+        "gitea": "http://localhost:3001/RioryFox/nixos_server.git",
+        "github": "https://github.com/RioryFox/nixos_server.git"
+      }
+    },
+    "backuper": {
+      "remotes": {
+        "gitea": "http://localhost:3001/rioryfox/backuper.git",
+        "github": "https://github.com/RioryFox/backuper.git"
+      }
+    }
+  },
+  "backup_targets": [
+    "/etc",
+    "/var/lib",
+    "/home/homefox/Documents"
+  ],
+  "exclude_patterns": [
+    "*.cache",
+    "*.tmp"
+  ]
+}
