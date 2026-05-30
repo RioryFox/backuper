@@ -13,6 +13,17 @@ git_push_force() {
     fi
 } 
 
+get_json_value() {
+    local file="$1"
+    local key="$2"
+    if [ -f "$file" ] && command -v jq >/dev/null 2>&1; then
+        jq -r "$key" "$file"
+    else
+        echo "ERROR: $file not found or jq missing" >&2
+        return 1
+    fi
+}
+
 while getopts ":flu" opt; do
 	case ${opt} in
     		f)
