@@ -94,7 +94,15 @@ backup_to_sd() {
     return 0
 }
 
-#---Main part script
+check_space(){
+	DATA_SIZE=$(du -sm "$1" | cut -fi)
+	if check_disk_space "$2" "$DATA_SIZE" 64; then
+		return 1
+	fi
+	return 0 
+}
+
+#---Основная часть скрита
 
 while getopts ":flu" opt; do
 	case ${opt} in
@@ -103,7 +111,7 @@ while getopts ":flu" opt; do
 		;;
     		l)
 			set +e
-			git add .
+			git add . 
 			if git diff --cached --quiet; then
     				echo "No changes to commit, skipping Git push"
 			else
@@ -167,12 +175,16 @@ else
   echo "Skipping file opening because of the -f flag."
 fi
 
+#---Локальное Архивирование
+
 backup_to_sd '/etc' 'etc_backup'
 echo "test1"
 backup_to_sd '/var/lib' 'var-lib_backup'
 echo "test2"
 backup_to_sd '/home' 'home_backup'
 echo "test3"
+
+#---Онлайн копия
 
 echo "pushing git changes..."
 cd /etc
@@ -188,6 +200,8 @@ else
  	echo "No changes in /etc"
 fi
 
+#---Перестройка системы
+
 cd - > /dev/null
 echo "			UPDATING CHANNELS..."
 sudo nix-channel --update > /dev/null 
@@ -196,6 +210,8 @@ sudo nixos-rebuild switch > /dev/null
 echo ""
 echo "			DELITING CACHE DATA..."
 sudo nix-collect-garbage -d > /dev/null  2>&1
+
+#---Очистка и вывод полезной информации
 
 clear
 fastfetch 
