@@ -26,7 +26,6 @@ get_json_value() {
     fi
 }
 
-
 backup_to_sd() {
     local SOURCE_PATH="$1"
     local BACKUP_NAME="${2:-$(basename "$SOURCE_PATH")_backup}"
@@ -82,16 +81,13 @@ backup_to_sd() {
 
     echo "Создание резервной копии $SOURCE_PATH в $BACKUP_DIR..."
 
-    # Синхронизация через rsync (инкрементальная копия)
     local RSYNC_DEST="$BACKUP_DIR/$(basename "$SOURCE_PATH")"
     rsync -avzq --checksum --delete "$SOURCE_PATH/" "$RSYNC_DEST/"
 
-    # Создание архива с датой
     local DATE_SUFFIX=$(date +%Y%m%d_%H%M%S)
     local ARCHIVE_NAME="${BACKUP_NAME}_${DATE_SUFFIX}.tar.gz"
     sudo tar -czpf "$BACKUP_DIR/$ARCHIVE_NAME" -C / "$(realpath "$SOURCE_PATH" --relative-to=/)" 2>/dev/null
 
-    # Ротация: оставляем последние 10 архивов
     sudo find "$BACKUP_DIR" -name "${BACKUP_NAME}_*.tar.gz" -type f 2>/dev/null | sort | head -n -10 | xargs -r sudo rm -f
 
     echo "Бэкап завершён: $BACKUP_DIR/$ARCHIVE_NAME"
@@ -173,6 +169,7 @@ fi
 
 backup_to_sd '/etc' 'etc_backup'
 backup_to_sd '/var/lib' 'var-lib_backup'
+backup_to_sd "/home" "home_backup"
 
 echo "pushing git changes..."
 cd /etc
