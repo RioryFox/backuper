@@ -171,8 +171,8 @@ else
   echo "Skipping file opening because of the -f flag."
 fi
 
-backup_to_sd('/etc')
-backup_to_sd('/var/lib')
+backup_to_sd '/etc' 'etc_backup'
+backup_to_sd '/var/lib' 'var-lib_backup'
 
 echo "pushing git changes..."
 cd /etc
