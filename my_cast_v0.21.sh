@@ -45,7 +45,7 @@ backup_to_sd() {
 
     echo "Поиск SD-карты с маркером '.fbi_backup_disk'..."
 
-    for DEV in $(lsblk -d -o NAME,RM,TYPE -n | awk '$2=="1" && $3=="disk" {print "/dev/"$1}'); do
+    for DEV in $(lsblk -d -o NAME,RM,TYPE -n | awk '$3=="disk" {print "/dev/"$1}'); do
         if [ -b "${DEV}1" ]; then
             PARTITION="${DEV}1"
         elif [ -b "${DEV}p1" ]; then
