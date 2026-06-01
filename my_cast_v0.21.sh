@@ -186,8 +186,8 @@ backup_to_sd '/etc' 'etc_backup'
 echo "test1"
 backup_to_sd '/var/lib' 'var-lib_backup'
 echo "test2"
-backup_to_sd '/home' 'home_backup'
-echo "test3"
+#backup_to_sd '/home' 'home_backup'
+#echo "test3"
 
 #---Онлайн копия
 
