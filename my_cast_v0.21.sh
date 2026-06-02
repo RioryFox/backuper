@@ -104,29 +104,27 @@ backup_to_sd() {
 
 upload_to_yadisk() {
     local FILE="$1"
-    local TOKEN="$YADISK_TOKEN"  # из переменной окружения
+    local TOKEN="$YADISK_TOKEN" 
     
     if [ -z "$TOKEN" ]; then
-        echo "⚠️ YADISK_TOKEN не задан, пропускаем"
+        echo " YADISK_TOKEN не задан, пропускаем"
         return 1
     fi
     
     local FILENAME=$(basename "$FILE")
-    echo "📤 Загружаем $FILENAME на Яндекс.Диск..."
+    echo "Загружаем $FILENAME на Яндекс.Диск..."
     
-    # Получаем URL для загрузки
     local UPLOAD_URL=$(curl -s -H "Authorization: OAuth $TOKEN" \
         "https://cloud-api.yandex.net/v1/disk/resources/upload/?path=app:/fbi_backups/$FILENAME&overwrite=true" \
         | jq -r '.href')
     
     if [ -z "$UPLOAD_URL" ] || [ "$UPLOAD_URL" = "null" ]; then
-        echo "❌ Не удалось получить ссылку для загрузки"
+        echo "Не удалось получить ссылку для загрузки"
         return 1
     fi
     
-    # Отправляем файл
     curl -s -T "$FILE" "$UPLOAD_URL"
-    echo "✅ Загружено: https://disk.yandex.ru/app/fbi_backups/$FILENAME"
+    echo "Загружено: https://disk.yandex.ru/app/fbi_backups/$FILENAME"
 }
 
 check_space(){
