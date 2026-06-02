@@ -197,11 +197,11 @@ while getopts ":flu" opt; do
 		;; 
 
 		r)
-			rebooter=true;
+			rebooter=true
 		;;  	
 
 		p)
-			poweroffer=true;
+			poweroffer=true
 		;;
 		\\?)
 			echo "Unknown option provided: -${OPTARG}"
@@ -256,6 +256,9 @@ clear
 fastfetch 
 ipfetch
 
+echo "$rebooter"
+echo "$poweroffer"
+
 if [ "$rebooter" = true ]; then
 	echo "system will be roboot because of -r flag in 5 seconds..."
 	sleep 5
@@ -264,6 +267,5 @@ elif [ "$poweroffer" = true ]; then
 	echo "system will shotdown in 5 seconds because of -p flag..."
 	sleep
 	poweroff
-	fi     
 fi
 #oneko
