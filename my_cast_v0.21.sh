@@ -102,6 +102,33 @@ backup_to_sd() {
     return 0
 }
 
+upload_to_yadisk() {
+    local FILE="$1"
+    local TOKEN="$YADISK_TOKEN"  # из переменной окружения
+    
+    if [ -z "$TOKEN" ]; then
+        echo "⚠️ YADISK_TOKEN не задан, пропускаем"
+        return 1
+    fi
+    
+    local FILENAME=$(basename "$FILE")
+    echo "📤 Загружаем $FILENAME на Яндекс.Диск..."
+    
+    # Получаем URL для загрузки
+    local UPLOAD_URL=$(curl -s -H "Authorization: OAuth $TOKEN" \
+        "https://cloud-api.yandex.net/v1/disk/resources/upload/?path=app:/fbi_backups/$FILENAME&overwrite=true" \
+        | jq -r '.href')
+    
+    if [ -z "$UPLOAD_URL" ] || [ "$UPLOAD_URL" = "null" ]; then
+        echo "❌ Не удалось получить ссылку для загрузки"
+        return 1
+    fi
+    
+    # Отправляем файл
+    curl -s -T "$FILE" "$UPLOAD_URL"
+    echo "✅ Загружено: https://disk.yandex.ru/app/fbi_backups/$FILENAME"
+}
+
 check_space(){
 	DATA_SIZE=$(du -sm "$1" | cut -fi)
 	if check_disk_space "$2" "$DATA_SIZE" 64; then
@@ -229,13 +256,14 @@ clear
 fastfetch 
 ipfetch
 
-if ["$rebooter" = true]; then
+if [ "$rebooter" = true ]; then
 	echo "system will be roboot because of -r flag in 5 seconds..."
 	sleep 5
 	reboot
-else ["$poweroffer" = true]; then
+elif [ "$poweroffer" = true ]; then
 	echo "system will shotdown in 5 seconds because of -p flag..."
 	sleep
 	poweroff
+	fi     
 fi
 #oneko
