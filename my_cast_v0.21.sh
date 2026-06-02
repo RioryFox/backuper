@@ -10,6 +10,7 @@ clear
 
 open_file=true
 rebooter=false
+poweroffer=false
 SCRIPT_DIR="$(pwd)"
 
 #---Functions
@@ -172,6 +173,9 @@ while getopts ":flu" opt; do
 			rebooter=true;
 		;;  	
 
+		p)
+			poweroffer=true;
+		;;
 		\\?)
 			echo "Unknown option provided: -${OPTARG}"
       			exit 1
@@ -225,9 +229,13 @@ clear
 fastfetch 
 ipfetch
 
-if rebooter; then
+if ["$rebooter" = true]; then
 	echo "system will be roboot because of -r flag in 5 seconds..."
 	sleep 5
 	reboot
+else ["$poweroffer" = true]; then
+	echo "system will shotdown in 5 seconds because of -p flag..."
+	sleep
+	poweroff
 fi
 #oneko
