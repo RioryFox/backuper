@@ -137,7 +137,7 @@ check_space(){
 
 #---Основная часть скрита
 
-while getopts ":flu" opt; do
+while getopts ":flurp" opt; do
 	case ${opt} in
     		f)
 			open_file=false
