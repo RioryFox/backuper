@@ -265,7 +265,7 @@ if [ "$rebooter" = true ]; then
 	reboot
 elif [ "$poweroffer" = true ]; then
 	echo "system will shotdown in 5 seconds because of -p flag..."
-	sleep
+	sleep 5
 	poweroff
 fi
 #oneko
