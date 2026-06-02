@@ -8,6 +8,7 @@ set -e
 clear
 
 open_file=true
+rebooter=false
 SCRIPT_DIR="$(pwd)"
 
 #---Functions
@@ -166,7 +167,11 @@ while getopts ":flu" opt; do
 		    	fi
 		;; 
 
-    		\\?)
+		r)
+			rebooter=true;
+		;;  	
+
+		\\?)
 			echo "Unknown option provided: -${OPTARG}"
       			exit 1
       		;;
@@ -218,4 +223,10 @@ sudo nix-collect-garbage -d > /dev/null  2>&1
 clear
 fastfetch 
 ipfetch
+
+if rebooter; then
+	echo "system will be roboot because of -r flag in 5 seconds..."
+	sleep 5
+	reboot
+fi
 #oneko
