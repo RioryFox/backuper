@@ -4,3 +4,4 @@
 *_key
 secrets/
 configs/*.local.yaml
+.webui_secret_key

@@ -1,8 +1,10 @@
 #!/bin/sh
 
+
 #TODO: 
 #- create json-database to git and backups and flakes/updates configs
 #- Sleep it is 8 day whan i get sleep at 3:02... 
+
 
 set -e
 clear
