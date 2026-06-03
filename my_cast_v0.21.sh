@@ -256,15 +256,12 @@ clear
 fastfetch 
 ipfetch
 
-echo "$rebooter"
-echo "$poweroffer"
-
 if [ "$rebooter" = true ]; then
 	echo "system will be roboot because of -r flag in 5 seconds..."
 	sleep 5
 	reboot
 elif [ "$poweroffer" = true ]; then
-	echo "system will shotdown in 5 seconds because of -p flag..."
+	echo "system will be shotdown because of -p flag in 5 seconds..."
 	sleep 5
 	poweroff
 fi
