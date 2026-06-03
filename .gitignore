@@ -1,0 +1,6 @@
+.env
+*.local.*
+*_secret
+*_key
+secrets/
+configs/*.local.yaml
