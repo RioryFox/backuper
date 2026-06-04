@@ -68,3 +68,30 @@ backup_to_sd() {
     echo "Полный бэкап раздела завершён: $BACKUP_DIR/$ARCHIVE_NAME"
     return 0
 }
+
+
+upload_to_yadisk() {
+
+    local FILE="$1"
+    local TOKEN="$YADISK_TOKEN"
+    local YOUR_YAAPP="$YAPP"
+
+    if [ -z "$TOKEN" ]; then
+        echo " YADISK_TOKEN не задан, пропускаем"
+        return 1
+    fi
+
+    local FILENAME=$(basename "$FILE")
+    echo "Загружаем $FILENAME на Яндекс.Диск..."
+
+    local UPLOAD_URL=$(curl -s -H "Authorization: OAuth $TOKEN" \
+        "https://cloud-api.yandex.net/v1/disk/resources/upload/?path=app:/$YOUR_YAAPP" | jq -r '.href')
+
+    if [ -z "$UPLOAD_URL" ] || [ "$UPLOAD_URL" = "null" ]; then
+        echo "Не удалось получить ссылку для загрузки"
+        return 1
+    fi
+
+    curl -s -T "$FILE" "$UPLOAD_URL"
+    echo "Загружено: https://disk.yandex.ru/app/$YOUR_YAAPP/$FILENAME"
+}
