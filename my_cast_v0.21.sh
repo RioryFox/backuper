@@ -9,7 +9,7 @@
 set -e
 clear
 
-#YADISK_TOKEN = ""
+YADISK_TOKEN=""
 open_file=true
 rebooter=false
 poweroffer=false
@@ -105,9 +105,11 @@ backup_to_sd() {
     return 0
 }
 
+#У МЕНЯ НЕТ ПРИЛОЖЕНИЯ ЯНДЕКС - НЕ МОГУ ПРОТЕСТИРОВАТЬ
 upload_to_yadisk() {
     local FILE="$1"
     local TOKEN="$YADISK_TOKEN"
+    local YOUR_YAAPP="$YAPP"
 
     if [ -z "$TOKEN" ]; then
         echo " YADISK_TOKEN не задан, пропускаем"
@@ -118,7 +120,7 @@ upload_to_yadisk() {
     echo "Загружаем $FILENAME на Яндекс.Диск..."
 
     local UPLOAD_URL=$(curl -s -H "Authorization: OAuth $TOKEN" \
-        "https://cloud-api.yandex.net/v1/disk/resources/upload/?path=app:/fbi_backups/$FILENAME&overwrite=true" \
+        "https://cloud-api.yandex.net/v1/disk/resources/upload/?path=app:/$YOUR_YAAPP/$FILENAME&overwrite=true" \
         | jq -r '.href')
 
     if [ -z "$UPLOAD_URL" ] || [ "$UPLOAD_URL" = "null" ]; then
@@ -127,9 +129,11 @@ upload_to_yadisk() {
     fi
 
     curl -s -T "$FILE" "$UPLOAD_URL"
-    echo "Загружено: https://disk.yandex.ru/app/fbi_backups/$FILENAME"
+    echo "Загружено: https://disk.yandex.ru/app/$YOUR_YAAPP/$FILENAME"
 }
 
+
+#А ВОТ С ЭТИМ ЩА БУДУРАБОТАТЬ
 check_space(){
 	DATA_SIZE=$(du -sm "$1" | cut -fi)
 	if check_disk_space "$2" "$DATA_SIZE" 64; then
