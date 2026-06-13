@@ -156,7 +156,7 @@ sudo nix-collect-garbage -d > /dev/null  2>&1
 
 clear
 fastfetch 
-ipfetch
+#ipfetch
 
 if [ "$rebooter" = true ]; then
 	echo "system will be roboot because of -r flag in 5 seconds..."
