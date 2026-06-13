@@ -18,7 +18,7 @@ backup_to_sd() {
         return 1
     fi
 
-    echo "Поиск SD-карты с маркером '.fbi_backup_disk'..."
+    echo "Поиск хранилища с маркером '.fbi_backup_disk'..."
 
     for DEV in $(lsblk -d -o NAME,RM,TYPE -n | awk '$3=="disk" {print "/dev/"$1}'); do
         if [ -b "${DEV}1" ]; then
@@ -40,13 +40,13 @@ backup_to_sd() {
         if [ -f "$MNT/.fbi_backup_disk" ]; then
             DEVICE="$DEV"
             MOUNT_POINT="$MNT"
-            echo "Найдена SD-карта: $DEVICE смонтирована в $MOUNT_POINT"
+            echo "Найдено хранилище: $DEVICE смонтирована в $MOUNT_POINT"
             break
         fi
     done
 
     if [ -z "$DEVICE" ]; then
-        echo "ОШИБКА: Не найдена SD-карта с маркером '.fbi_backup_disk'"
+        echo "ОШИБКА: Не найдено хранилище с маркером '.fbi_backup_disk'"
         echo "Создайте маркер: touch '/run/media/.../.fbi_backup_disk'"
         return 1
     fi
@@ -57,7 +57,7 @@ backup_to_sd() {
     echo "Создание резервной копии $SOURCE_PATH в $BACKUP_DIR..."
 
     local RSYNC_DEST="$BACKUP_DIR/$(basename "$SOURCE_PATH")"
-    rsync -avzq --checksum --delete "$SOURCE_PATH/" "$RSYNC_DEST/"
+    rsync -azq --checksum --delete "$SOURCE_PATH/" "$RSYNC_DEST/" --exclude='containers/storage/overlay*' --exclude='*.sock' --exclude='*.pid' 2>/dev/null
     echo "Команда rsync выполнена..."
     local DATE_SUFFIX=$(date +%Y%m%d_%H%M%S)
     local ARCHIVE_NAME="${BACKUP_NAME}_${DATE_SUFFIX}.tar.gz"
@@ -72,8 +72,7 @@ backup_to_sd() {
 
 upload_to_yadisk() {
 
-    local FILE="$1"
-    local TOKEN="$YADISK_TOKEN"
+    local FILE="$1"    local TOKEN="$YADISK_TOKEN"
     local YOUR_YAAPP="$YAPP"
 
     if [ -z "$TOKEN" ]; then
