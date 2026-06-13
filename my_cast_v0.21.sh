@@ -123,7 +123,7 @@ fi
 
 backup_to_sd '/etc' 'etc_backup'
 backup_to_sd '/var/lib' 'var-lib_backup'
-backup_to_sd '/home/homefox' 'home_backup'
+#backup_to_sd '/home/homefox' 'home_backup'
 
 #---Онлайн копия
 
