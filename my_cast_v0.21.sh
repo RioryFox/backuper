@@ -122,9 +122,9 @@ fi
 #---Локальное Архивирование
 
 backup_to_sd '/etc' 'etc_backup'
-backup_to_sd '/var/lib' 'var-lib_backup'
-#backup_to_sd '/home/homefox' 'home_backup'
-
+#backup_to_sd '/var/lib' 'var-lib_backup'
+backup_to_sd '/home/homefox/Documents' 'home_backup'
+echo "127"
 #---Онлайн копия
 
 echo "pushing git changes..."
