@@ -142,9 +142,9 @@ fi
 
 cd - > /dev/null
 echo "			UPDATING CHANNELS..."
-sudo nix-channel --update > /dev/null 
+sudo nix-channel --update > /dev/null; sudo nix --extra-experimental-features "nix-command flakes" flake update > /dev/null
 echo "			REBUILDING NIXOS..."
-sudo nixos-rebuild switch > /dev/null
+sudo nixos-rebuild switch --upgrade --flake ./  > /dev/null
 echo ""
 #echo "			DELITING CACHE DATA..."
 #sudo nix-collect-garbage -d > /dev/null  2>&1
