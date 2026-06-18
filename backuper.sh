@@ -125,17 +125,17 @@ backup_to_sd '/home/homefox/Documents' 'home_backup'
 #---Онлайн копия
 
 echo "pushing git changes..."
-cd /etc
+cd /home/homefox/Documents/HF01MS-16
 git add .
 if ! git diff --cached --quiet; then
  	git commit -m "Auto backup from $(hostname) on $(date '+%Y-%m-%d %H:%M:%S')"
 	set +e
-    	git_push_force origintea
+    git_push_force origintea
    	git_push_force origingit
 	git_push_force origincode
 	set -e
 else
- 	echo "No changes in /etc"
+ 	echo "No changes in " & pwd
 fi
 
 #---Перестройка системы
