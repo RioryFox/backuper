@@ -14,8 +14,6 @@
     }
   },
   "backup_targets": [
-    "/etc",
-    "/var/lib",
     "/home/homefox/Documents"
   ],
   "exclude_patterns": [
