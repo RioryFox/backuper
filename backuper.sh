@@ -13,6 +13,7 @@ YADISK_TOKEN=""
 open_file=true
 rebooter=false
 poweroffer=false
+clearer=false
 SCRIPT_DIR="$(pwd)"
 source "$SCRIPT_DIR/lib/backup.sh"
 source "$SCRIPT_DIR/lib/git.sh"
@@ -41,7 +42,7 @@ check_space(){
 
 #---Основная часть скрита
 
-while getopts ":flurp" opt; do
+while getopts ":flurpc" opt; do
 	case ${opt} in
     		f)
 			open_file=false
@@ -105,6 +106,9 @@ while getopts ":flurp" opt; do
 		p)
 			poweroffer=true
 		;;
+		c)
+			clearer=true
+		;;
 		\\?)
 			echo "Unknown option provided: -${OPTARG}"
       			exit 1
@@ -146,8 +150,10 @@ sudo nix-channel --update > /dev/null; sudo nix --extra-experimental-features "n
 echo "			REBUILDING NIXOS..."
 sudo nixos-rebuild switch --upgrade --flake ../  > /dev/null
 echo ""
-#echo "			DELITING CACHE DATA..."
-#sudo nix-collect-garbage -d > /dev/null  2>&1
+
+if [clearer]; then
+	echo "			DELITING CACHE DATA..."
+	sudo nix-collect-garbage -d > /dev/null  2>&1
 
 #---Очистка и вывод полезной информации
 
