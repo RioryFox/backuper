@@ -149,8 +149,8 @@ sudo nix-channel --update > /dev/null
 echo "			REBUILDING NIXOS..."
 sudo nixos-rebuild switch > /dev/null
 echo ""
-echo "			DELITING CACHE DATA..."
-sudo nix-collect-garbage -d > /dev/null  2>&1
+#echo "			DELITING CACHE DATA..."
+#sudo nix-collect-garbage -d > /dev/null  2>&1
 
 #---Очистка и вывод полезной информации
 
