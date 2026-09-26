@@ -1,6 +1,6 @@
 rclone "$HOME/FBl-2core" "gdrive:FBL/FBl-2core" - гугл диск 
 gitea - основной источник данных
-github + codeberg - зеркал
+github + codeberg - зеркала
 
 git add . && git commit -m "test" && git push &&  (rclone delete "$GDRIVE/FBL/FBl-2core"; rclone "$HOME/FBl-2core" "$GDRIVE/FBL/FBl-2core")  - примерно такой порядок пока что 
 
