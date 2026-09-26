@@ -1,6 +1,6 @@
 # 🦊 FBI Backup System
 
-**ЗАБИРАЮ НА РУЧНОЕ УПРАВЛНТЕ - буду долго делать (слоамаласчь автоматизация по скрипту работы с git)**
+**ЗАБИРАЮ НА РУЧНОЕ УПРАВЛНТЕ - буду долго делать - восстанавдливаю мозги после года херни (печати документов)**
 
 **Скрипт автоматического резервного копирования для NixOS**
 
@@ -30,8 +30,8 @@
 ### 1. Клонирование репозитория
 
 ```bash
-git clone https://github.com/*Имя аккаунта*/*имя репозитория*.git /*ваш путь*/backuper
-cd /*ваш путь*/backuper
+git clone https://github.com/$USER/$REPO.git /$PATH_BACKUPER/backuper
+cd /$PATH_BACKUPER/backuper
 
 ### 2. Установка прав
 
@@ -41,13 +41,12 @@ sudo ln -sf /opt/backuper/my_cast.sh /usr/local/bin/fbi-backup
 ### 3. Создание маркера
 
 # Создаём метку для идентификации диска
-touch /run/media/homefox/*ваше устройство*/.fbi_backup_disk
+touch /run/media/$USER/*backup устройство*/.fbi_backup_disk
 
 ### 4. Создание резервных репозиториев
 
 cd /etc
-git remote add gitea http://localhost:3001/RioryFox/nixos_server.git
-git remote add origin https://github.com/RioryFox/nixos_server.git
+git remote add gitea $GIT_URL
 
 ---
 
@@ -55,8 +54,8 @@ git remote add origin https://github.com/RioryFox/nixos_server.git
 
 ### Из папки
 
-sudo rsync -av /run/media/homefox/*ваше устройство*/etc/ /etc
+sudo rsync -av /run/media/$USER/*backup устройство*/etc/ /etc
  
 ### Из архива
 
-sudo tar -xzvpf /run/media/homefox/FBI_SD01/etc_backup_*ваш файл*.tar.gz -C /
+sudo tar -xzvpf /run/media/$USER /FBI_SD01/etc_backup_*backup файл*.tar.gz -C /
