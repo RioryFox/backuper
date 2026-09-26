@@ -2,6 +2,9 @@
 *.local.*
 *_secret
 *_key
+ed25519*
 secrets/
 configs/*.local.yaml
 .webui_secret_key
+*.fbl_secret*
+*.security*

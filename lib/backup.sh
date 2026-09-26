@@ -1,22 +1,6 @@
 #!/bin/sh
 
-
-backup_to_sd() {
-    local SOURCE_PATH="$1"
-    local BACKUP_NAME="${2:-$(basename "$SOURCE_PATH")_backup}"
-    local MOUNT_POINT=""
-    local DEVICE=""
-
-    if [ -z "$SOURCE_PATH" ]; then
-        echo "Ошибка: не указан путь для бэкапа"
-        echo "Использование: backup_to_sd <путь> [имя_бэкапа]"
-        return 1
-    fi
-
-    if [ ! -d "$SOURCE_PATH" ]; then
-        echo "Ошибка: путь $SOURCE_PATH не существует"
-        return 1
-    fi
+find_backup_disk(){
 
     echo "Поиск хранилища с маркером '.fbi_backup_disk'..."
 
@@ -44,6 +28,25 @@ backup_to_sd() {
             break
         fi
     done
+    return DEVICE, MOUNT_POINT
+}
+
+backup_to_sd() {
+    local SOURCE_PATH="$1"
+    local BACKUP_NAME="${2:-$(basename "$SOURCE_PATH")_backup}"
+    local MOUNT_POINT=""
+    local DEVICE=""
+
+    if [ -z "$SOURCE_PATH" ]; then
+        echo "Ошибка: не указан путь для бэкапа"
+        echo "Использование: backup_to_sd <путь> [имя_бэкапа]"
+        return 1
+    fi
+
+    if [ ! -d "$SOURCE_PATH" ]; then
+        echo "Ошибка: путь $SOURCE_PATH не существует"
+        return 1
+    fi
 
     if [ -z "$DEVICE" ]; then
         echo "ОШИБКА: Не найдено хранилище с маркером '.fbi_backup_disk'"
