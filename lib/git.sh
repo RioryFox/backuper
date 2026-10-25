@@ -27,8 +27,8 @@ git_push() {
 git_commit() {
     local path=$1
     check_path "$path"
-    git -C "$path" add .
-    git -C "$path" commit -m "Backup push for all git and backup disks by $(date +%Y-%m-d%) by project backuper https://github.com/RioryFox/backuper"
+    git -C "$path" add . || return 1
+    git -C "$path" commit -m "Backup push for all git and backup disks by $(date +%Y-%M-D%) by project backuper https://github.com/RioryFox/backuper" || return 1
 }
 
 git_backup(){

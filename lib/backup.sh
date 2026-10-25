@@ -23,5 +23,7 @@ ignor_errors(){
 disk_backup(){
     local path="$1"
     local destination="$2"
-    rsync -azq --checksum --delete "$path/" "$destionation/" --exclude='containers/storage/overlay*' --exclude='*.sock' --exclude='*.pid' 2>/dev/null
+    ! check_path $path || check_path $destination
+    rsync -azq --checksum --delete "$path/" "$destination/" --exclude='containers/storage/overlay*' --exclude='*.sock' --exclude='*.pid' 2>/dev/null
+    return 0
 }
