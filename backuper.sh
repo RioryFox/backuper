@@ -9,12 +9,9 @@ while IFS= read -r disk; do
         mount_point=$(lsblk -dn -o MOUNTPOINT "$device")
         uuid=$(lsblk -dn -o UUID "$device")
 
-        while read -r partition; do
+        echo "диск: $disk"
 
-                if [[ "$partition" == "$NAME_TYPE"* ]]; then
-                        echo "найден раздел для резервных копий на диске: $disk\n $uuid \n $mountpoint"
-                else
-                        echo "$disk не подошел, $partition"
-                fi
-        done
+        while IFS= read -r partition; do
+                echo " раздел: $partition"
+        done 
 done < <(lsblk -dn -o NAME)
