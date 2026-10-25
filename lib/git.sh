@@ -4,10 +4,7 @@ git_push() {
     local path="$1"
     local ignor_errors=$2
 
-    if [[ ! -d "$path" ]]; then
-        echo "Не найден каталог: $path"
-        return 1;
-    fi 
+    check_path "$path"
 
     if [[ ! -d "$path/.git" && ! -f "$path/.git" ]]; then
         echo "Каталог $path не является коренм git репозитория!"
@@ -27,6 +24,7 @@ git_push() {
 
 git_commit() {
     local path=$1
+    check_path "$path"
     git -C "$path" add .
     git -C "$path" commit -m "Backup push for all git and backup disks by $(date +%Y-%m-d%) by project backuper https://github.com/RioryFox/backuper"
 }
@@ -34,6 +32,7 @@ git_commit() {
 git_backup(){
     local path="$1"
     local git_commit="$2"
+    check_path "$path"
 
     if [[ "$2"=="y" ]]; then
         git_commit "$1"
