@@ -23,8 +23,11 @@ ignor_errors(){
 disk_backup(){
     local path="$1"
     local destination="$2"
+    local mark="$4"
     check_path $path || return 1
     check_path $destination || return 1
-    rsync -azq --checksum --delete "$path/" "$destination/" --exclude='containers/storage/overlay*' --exclude='*.sock' --exclude='*.pid' 2>/dev/null
+    mountpoint -q "$destination" || return 1
+    check_path "$destination/$mark" || return 1
+    rsync -aHAX --numeric-ids --checksum --delete "$path/" "$destination/" || return 1
     return 0
 }
