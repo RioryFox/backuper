@@ -2,13 +2,14 @@
 
 git_push() {
     local path="$1"
+    local ignor_errors=$2
 
-    if [[ ! -d "$path"]]; then
+    if [[ ! -d "$path" ]]; then
         echo "Не найден каталог: $path"
         return 1;
     fi 
 
-    if [[ ! -d "$path/.git" && ! -f "$path/.git"]]; then
+    if [[ ! -d "$path/.git" && ! -f "$path/.git" ]]; then
         echo "Каталог $path не является коренм git репозитория!"
         return 1;
     fi 
@@ -20,7 +21,7 @@ git_push() {
     if git -C "$path" push; then
         echo "✓ $path push successful"
     else
-        echo "✗ push failed: $result"
+        echo "✗ push failed: $path"
     fi
 } 
 
@@ -34,8 +35,8 @@ git_backup(){
     local path="$1"
     local git_commit="$2"
 
-    if "$2"=="y"; then
-        git_commit("$1")
+    if [[ "$2"=="y" ]]; then
+        git_commit "$1"
     fi
-    git_push("$1")
+    git_push "$1"
 }

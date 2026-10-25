@@ -71,3 +71,14 @@ backup_to_sd() {
     echo "Полный бэкап раздела завершён: $BACKUP_DIR/$ARCHIVE_NAME"
     return 0
 }
+
+ignor_errors(){
+    local path=$1
+    local ignor_errors=$2
+
+    if "$ignor_errors"=="y"; then
+            echo "Продолжение сохранения резервных данных не смотря на неудавшуюся операцию..."
+            return 0
+        fi
+        return 1
+}
