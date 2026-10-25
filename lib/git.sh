@@ -20,7 +20,7 @@ git_push() {
         return 0
     else
         echo "✗ push failed: $path"
-        ignor_errors "$ignor_error"
+        ignor_errors "$path" "$ignor_error"
     fi
 } 
 
@@ -28,16 +28,17 @@ git_commit() {
     local path=$1
     check_path "$path"
     git -C "$path" add . || return 1
-    git -C "$path" commit -m "Backup push for all git and backup disks by $(date +%Y-%M-D%) by project backuper https://github.com/RioryFox/backuper" || return 1
+    git -C "$path" commit -m "Backup push for all git and backup disks by $(date +%Y-%m-d%) by project backuper https://github.com/RioryFox/backuper" || return 1
 }
 
 git_backup(){
     local path="$1"
     local git_commit="$2"
+    local ignor_error="$3"
     check_path "$path"
 
-    if [[ "$2" == "y" ]]; then
-        git_commit "$1"
+    if [[ "$git_commit" == "y" ]]; then
+        git_commit "$path"  || ignor_errors "$path" "$ignor_error"
     fi
-    git_push "$1"
+    git_push "path"
 }
