@@ -6,6 +6,7 @@ check_path(){
         echo "Не найден каталог: $path"
         return 1;
     fi 
+    echo "Найден каталог: $path"
     return 0
 }
 
