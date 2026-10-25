@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 cloud_backup(){
         local path="$1"
@@ -9,4 +9,5 @@ cloud_backup(){
                 ignor_errors "$3"
         fi
         rclone copy "$path" "$destination" --progress
+        return 1
 }

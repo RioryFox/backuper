@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 git_push() {
     local path="$1"
-    local ignor_errors=$2
+    local ignor_error=$2
 
     check_path "$path"
 
@@ -17,8 +17,10 @@ git_push() {
     #git commit -m "Backup push for all git and backup disks by $(date +%Y-%m-d%)"
     if git -C "$path" push; then
         echo "✓ $path push successful"
+        return 0
     else
         echo "✗ push failed: $path"
+        ignor_errors "$ignor_error"
     fi
 } 
 
@@ -34,7 +36,7 @@ git_backup(){
     local git_commit="$2"
     check_path "$path"
 
-    if [[ "$2"=="y" ]]; then
+    if [[ "$2" == "y" ]]; then
         git_commit "$1"
     fi
     git_push "$1"

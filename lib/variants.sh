@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 readonly FLAG_POINT='.fbi_backup_disk'
 readonly NAME_TYPE='FBL_BK'
