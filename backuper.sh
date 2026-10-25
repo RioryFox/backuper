@@ -7,14 +7,15 @@ readonly ORIGIN_DISK_PATH='/'
 
 while IFS= read -r disk; do
         device="/dev/$disk"
-        uuid=$(lsblk -dn -o UUID "$device")
+        uuid=$(lsblk -dno UUID "$device")
 
         echo "диск: $disk"
 
         while IFS= read -r partition; do
 
-                mount_point=$(lsblk -ln -o MOUNTPOINT "$partition")
+                mount_point=$(lsblk -dno MOUNTPOINT "$partition")
                 echo " раздел: $partition"
+                echo "$mount_point"
                 check_file "$mount_point/$FLAG_POINT"
-        done < <(lsblk -ln -o NAME,TYPE "$device" | awk '$2 == "part" {print $1}')
-done < <(lsblk -dn -o NAME)
+        done < <(lsblk -lnpo NAME,TYPE "$device" | awk '$2 == "part" {print $1}')
+done < <(lsblk -dno NAME)
