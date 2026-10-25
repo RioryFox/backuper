@@ -10,6 +10,16 @@ check_path(){
     return 0
 }
 
+check_file(){
+    local path="$1"
+    if [[ ! -f "$path" ]]; then
+        echo "Не найден файл: $path"
+        return 1;
+    fi 
+    echo "Найден файл: $path"
+    return 0
+}
+
 ignor_errors(){
     local path=$1
     local ignor_error=$2
