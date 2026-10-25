@@ -6,12 +6,15 @@ readonly ORIGIN_DISK_PATH='/'
 
 while IFS= read -r disk; do
         device="/dev/$disk"
-
-        label=$(lsblk -dn -o LABEL "$device")
         mount_point=$(lsblk -dn -o MOUNTPOINT "$device")
         uuid=$(lsblk -dn -o UUID "$device")
 
-        if [[ "$label" == "$NAME_TYPE"* ]]; then
-                echo "найден раздел для резервных копий на диске: $disk\n $uuid \n $mountpoint"
-        fi
+        while read -r partition; do
+
+                if [[ "$partition" == "$NAME_TYPE"* ]]; then
+                        echo "найден раздел для резервных копий на диске: $disk\n $uuid \n $mountpoint"
+                else
+                        echo "$disk не подошел, $partition"
+                fi
+        done
 done < <(lsblk -dn -o NAME)
