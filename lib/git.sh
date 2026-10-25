@@ -1,10 +1,12 @@
 #!/bin/sh
 
 git_push_force() {
-    if result=$(git push "$1" 2>&1); then
-        echo "✓ $1 push successful"
+    git add .
+    git commit -m "Backup push for all git and backup disks by $(date +%Y-%m-d%)"
+    if result=$(git push 2>&1); then
+        echo "✓ push successful"
     else
-        echo "✗ $1 push failed: $result"
+        echo "✗ push failed: $result"
     fi
 } 
 
