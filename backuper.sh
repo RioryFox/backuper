@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 
+readonly FLAG_POINT='.fbi_backup_disk'
+readonly NAME_TYPE='FBL_BK'
+readonly ORIGIN_DISK_PATH='/'
 
 while IFS= read -r disk; do
         device="/dev/$disk"
-        model=$(lsblk -dn -o NAME "$device")
+
+        label=$(lsblk -dn -o LABEL "$device")
         mount_point=$(lsblk -dn -o MOUNTPOINT "$device")
-        size=$(lsblk -dn -o SIZE "$device")
-        if model[0:${#NAME_TYPE}] == "$NAME_TYPE" && check_path "$mount_point/$FLAG_POINT"; then
-                echo "disk: $disk"
+        uuid=$(lsblk -dn -o UUID "$device")
+
+        if [[ "$label" == "$NAME_TYPE"* ]]; then
+                echo "найден раздел для резервных копий на диске: $disk\n $uuid \n $mountpoint"
         fi
 done < <(lsblk -dn -o NAME)
